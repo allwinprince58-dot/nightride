@@ -28,6 +28,7 @@
     h2 {
       margin-bottom: 20px;
       font-size: 26px;
+      color: #fff;
     }
 
     input, button {
@@ -39,12 +40,17 @@
       border-radius: 8px;
       border: none;
       background: #111;
-      color: white;
+      color: #fff;
       box-sizing: border-box;
+    }
+
+    input::placeholder {
+      color: #888;
     }
 
     button {
       background: #ff0055;
+      color: #fff;
     }
 
     #chat {
@@ -56,21 +62,23 @@
       padding: 10px;
       margin-bottom: 8px;
       background: #000;
+      color: #fff;
+      text-align: left;
     }
 
     #typing {
       width: 100%;
       max-width: 400px;
       font-size: 12px;
-      color: #777;
+      color: #aaa;
       height: 18px;
       margin-bottom: 5px;
     }
 
-    @media (min-width: 600px) {
-      #chat {
-        height: 300px;
-      }
+    .msg {
+      margin: 4px 0;
+      color: #fff;
+      word-wrap: break-word;
     }
   </style>
 </head>
@@ -118,6 +126,7 @@ channel.onmessage = (e) => {
 
   let chat = document.getElementById("chat");
   let msgDiv = document.createElement("div");
+  msgDiv.className = "msg";
   msgDiv.innerText = "💬 " + data.text;
   chat.appendChild(msgDiv);
   chat.scrollTop = chat.scrollHeight;
@@ -134,20 +143,3 @@ function send() {
     msg.value = "";
   }
 }
-
-function sendTyping() {
-  channel.postMessage({ type: "typing" });
-}
-
-function showTyping() {
-  let typing = document.getElementById("typing");
-  typing.innerText = "Someone is typing...";
-  clearTimeout(typingTimeout);
-  typingTimeout = setTimeout(() => {
-    typing.innerText = "";
-  }, 1000);
-}
-</script>
-
-</body>
-</html>
